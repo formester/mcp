@@ -85,6 +85,37 @@ Switch Copilot Chat to **Agent mode** to use the tools.
 }
 ```
 
+### Claude Code
+
+Run once in your terminal:
+
+```bash
+claude mcp add --transport sse formester https://app.formester.com/mcp/sse \
+  --header "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
+### Windsurf
+
+Edit `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "formester": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://app.formester.com/mcp/sse",
+        "--header",
+        "Authorization: Bearer YOUR_TOKEN_HERE"
+      ]
+    }
+  }
+}
+```
+
+Restart Windsurf after saving.
+
 ---
 
 ## Example prompts
