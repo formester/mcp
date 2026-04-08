@@ -22,18 +22,31 @@ The token value is corrupted or from a different environment. Make sure you copi
 
 ---
 
+## OAuth errors
+
+### Browser shows "access_denied" or error after clicking Deny
+This is expected — the client receives an `error=access_denied` redirect from the server, which is the correct OAuth behavior. To connect, start the flow again and click **Allow**.
+
+### "invalid_scope" during authorization
+The OAuth client was registered with outdated scope names. Scopes use colon notation: `submission:read`, `submission:write`, `form:read`. If you registered a custom client with dot notation, re-register it.
+
+### Client isn't prompting for OAuth / falls back to token
+Your MCP client version may not support OAuth. Use the API token method instead — see [Authentication](authentication.md).
+
+---
+
 ## Authorization errors
 
 ### "Insufficient permissions. Required scope: ..."
-The token doesn't have the required permission for the tool being called.
+The token or OAuth grant doesn't have the required scope for the tool being called.
 
-| Tool | Required permission |
-|------|---------------------|
-| `read_submission`, `query_submissions`, `fetch_file` | View Submissions |
-| `update_submission` | Update Submissions |
-| `query_submissions` (form lookup) | View Forms |
+| Tool | Required scope |
+|------|---------------|
+| `read_submission`, `query_submissions`, `fetch_file` | `submission:read` |
+| `update_submission` | `submission:write` |
 
-Go to **Formester → API**, revoke the current token and create a new one with the correct permissions.
+For API tokens: go to **Formester → API**, revoke the current token and create a new one with the correct permissions.
+For OAuth: re-authorize the connection and approve all requested scopes.
 
 ### "Submission not found or access denied"
 The submission UUID doesn't belong to your organization, or the token doesn't have access to it. Verify the UUID is correct.
@@ -42,7 +55,7 @@ The submission UUID doesn't belong to your organization, or the token doesn't ha
 The form UUID doesn't exist in your organization or the token doesn't have access to it.
 
 ### "Token is restricted to a different form"
-You're using a form-scoped token but calling a tool with a submission or form outside its scope. [Contact support](https://formester.com/contact) to get a token for the correct form.
+You're using a form-scoped API token but calling a tool with a submission or form outside its scope. Create a new token with the correct form access.
 
 ---
 
@@ -74,13 +87,13 @@ The PDF is corrupted or malformed. Retry with `extract_text: false` to get the r
 ## Tools not appearing in Claude Desktop
 - Fully quit Claude Desktop (not just close the window) and reopen it after editing the config
 - Check the config file is valid JSON — a missing comma or bracket silently prevents loading
-- Verify connectivity: `curl https://app.formester.com/mcp/sse`
+- Verify connectivity: `curl https://app.formester.com/mcp`
 
 ---
 
 ## Rate limit errors (429)
 - 100 requests per minute per token
-- 1000 requests per hour per token
+- 1,000 requests per hour per token
 
 Reduce the frequency of `query_submissions` calls or lower the `limit` parameter.
 

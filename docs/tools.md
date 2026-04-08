@@ -23,7 +23,7 @@ Read submission a1b2c3d4 and summarize the support issue reported.
 Read submission a1b2c3d4 with files included, then fetch the resume PDF and extract the candidate's skills and experience.
 ```
 
-**Required scope:** `submission.read`
+**Required scope:** `submission:read`
 
 ---
 
@@ -62,7 +62,7 @@ Find all starred submissions from the past week for form xyz and summarize the c
 Get all job applications from form xyz where 'ai_status' is 'shortlisted' and draft interview questions for each.
 ```
 
-**Required scope:** `submission.read`
+**Required scope:** `submission:read`
 
 ---
 
@@ -94,7 +94,7 @@ Read submission a1b2c3d4 and save a one-sentence summary back as 'ai_summary'.
 Review the contact form submission a1b2c3d4 and tag it as 'sales', 'support', or 'other' using a field called 'ai_category'.
 ```
 
-**Required scope:** `submission.write`
+**Required scope:** `submission:write`
 
 ---
 
@@ -129,4 +129,4 @@ Read submission a1b2c3d4 with files included, then fetch the attached PDF and ex
 Fetch image attachment 789 from submission a1b2c3d4 and describe what's shown in it.
 ```
 
-**Required scope:** `submission.read`
+**Required scope:** `submission:read`
